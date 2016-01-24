@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+
+    </style>
+</head>
+<style>
+
+    /*CSS源代码*/
+    body {
+        background: #fff;
+    }
+
+    * {
+        font-size: 12px;
+        color: #999;
+    }
+
+    input[type=checkbox] {
+        visibility: hidden;
+    }
+
+    .checkbox {
+        width: 70px;
+        height: 20px;
+        background: #999;
+        border-radius: 15px;
+        position: relative;
+    }
+
+    .checkbox + .checkbox {
+        margin-top: 15px;
+    }
+
+    .checkbox label {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ccc;
+        left: 0;
+        cursor: pointer;
+        transition: all .5s ease-in;
+    }
+
+    /*这里是重点*/
+    input[type=checkbox]:checked + label {
+        left: 50px;
+        background: blue;
+    }
+
+    /*第二个*/
+    div + div {
+        margin-top: 15px;
+    }
+
+    .text {
+        position: relative;
+    }
+
+    #text {
+        padding: 15px;
+        border: 1px solid #999;
+        outline: none;
+    }
+
+    #text + label {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        background: #fff;
+        padding: 5px;
+        transition: all linear .2s;
+    }
+
+    #text:focus {
+        border: 1px solid #5188a6;
+    }
+
+    #text:focus + label {
+        top: -12px;
+        color: #518a65;
+    }
+</style>
+<body>
+<div id="container">
+    <div class="checkbox"><input type="checkbox" id="chk1" checked><label for="chk1"></label></div>
+    <div class="checkbox"><input type="checkbox" id="chk2"><label for="chk2"></label></div>
+
+    <div class="text"><input type="text" id="text"><label for="text">点我试试</label></div>
+</div>
+
+
+<script>
+    var book={
+        title :"High Performance JavaScript",
+        publisher:"Yahoo!Press"
+    };
+    alert(book.toString());
+    //    function Person(name, age) {
+    //        this.name = name;
+    //        this.age = age;
+    //    }
+    //    Person.prototype.hi = function () {
+    //        console.log('Hi,my name is ' + this.name + ",I'm " + this.age + "years old now");
+    //    }
+    //
+    //    Person.prototype.LEGS_NUM = 2;
+    //    Person.prototype.ARMS_NUM = 2;
+    //    Person.prototype.walk = function () {
+    //        console.log(this.name + "is walking...");
+    //    }
+    //
+    //    function Student(name, age, className) {
+    //        Person.call(this, name, age);
+    //        this.className = className;
+    //    }
+    //    Student.prototype = Object.create(Person);
+    //    Student.prototype.constructor = Student;
+    //    Student.prototype.hi = function () {
+    //        console.log("Hi,my name is " + this.name + "I'm" + this.age + "years old now,and from" + this.className + ".");
+    //    }
+    //    Student.prototype.learn = function (subject) {
+    //        console.log(this.name + " is learning" + subject + "at" + this.className + ".");
+    //    }
+    //
+    //
+    //    var bosn = new Student('Bosn', 28,
+    //                    'Class 3,Grade 2'
+    //            )
+    //            ;
+    //    bosn.hi();
+    //    bosn.LEGS_NUM;
+    //    bosn.walk();
+    //    bosn.learn("math");
+    //    function constfunc(v) {
+    //        return function () {
+    //            return v;
+    //        };
+    //    };
+    //    var funcs = [];
+    //    for (var i = 0; i < 10; i++) {
+    //        funcs[i] = constfunc(i);
+    //    }
+    //    ;
+    //    funcs[5]();
+
+    //    function constfuncs() {
+    //        var funcs = [];
+    //        for (var i = 0; i < 10; i++) {
+    //            funcs[i] = function () {
+    //                return i;
+    //            };
+    //            return funcs;
+    //        }
+    //    }
+    //    var funcs = constfuncs();
+    //    funcs[5]();
+</script>
+</body>
+</html>

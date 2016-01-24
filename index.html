@@ -1,0 +1,1009 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+    <title>Untitled Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link href="font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+    <link href="font-awesome-ie7.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-family: "Microsoft YaHei";
+        }
+
+        #TicketOfBottom {
+            position: relative;
+            z-index: 3;
+            width: 310px;
+            height: 47px;
+            cursor: pointer;
+            background-color: #FFF;
+            /* border-color: #088ef0;
+             background: -webkit-gradient(linear, left top, left bottom, from(#34a5f8), to(#088ef0));
+             background: linear-gradient(#34a5f8, #088ef0);
+             box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px -2px 1px rgba(0, 0, 0, 0.1);*/
+            /*background-color: #FFF;
+            border:2px solid rgb(27, 154, 247);*/
+
+        }
+
+        .blueBorder {
+            border: 1px solid rgb(27, 154, 247);
+        }
+
+        .orangeBorder {
+            border: 1px solid #FEAE1B;
+        }
+
+        .redBorder {
+            border: 1px solid rgb(255, 67, 81);
+        }
+
+        .greenBorder {
+            border: 1px solid #A5DE37;
+        }
+
+        .ShoppingCart {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            right: 50%;
+            margin-right: -585px;
+        }
+
+        #CartContent {
+            position: absolute;
+            z-index: 1;
+            width: 310px;
+            padding: 5px;
+            overflow: auto;
+            background-color: #fff;
+            /*控制频率*/
+            -webkit-animation-duration: 5s;
+            animation-duration: 5s;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+
+        .BlueBreatheLight {
+            /*购物车正常情况下蓝色呼吸灯效果*/
+            border: 1px solid #1B9AF7;
+            -webkit-animation-name: glowing-primary;
+            animation-name: glowing-primary;
+        }
+
+        .OrangeBreatheLight {
+            /*当购物车数量大于5时橘黄色呼吸灯效果*/
+            border: 1px solid #FEAE1B;
+            -webkit-animation-name: glowing-highlight;
+            animation-name: glowing-highlight;
+        }
+
+        .RedBreatheLight {
+            /*当购物车数量等于10时红色呼吸灯效果*/
+            border: 1px solid #FF7680;
+            -webkit-animation-name: glowing-caution;
+            animation-name: glowing-caution;
+        }
+
+        .GreenBreatheLight {
+            /*当购物车数量空时绿色呼吸灯效果*/
+            border: 1px solid #A5DE37;
+            -webkit-animation-name: glowing-action;
+            animation-name: glowing-action;
+        }
+
+        .CheckOut {
+            z-index: 4;
+            position: absolute;
+            left: 232px;
+            top: 6px;
+
+        }
+
+        #contentTitle {
+            font-weight: normal;
+            color: #888;
+            margin: 0;
+        }
+
+        .Title {
+            font-size: 14px;
+        }
+
+        #FoodList ul li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #FoodList {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .SetNum {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+
+        }
+
+        .operation {
+            background: #f5f5f5;
+            color: #999;
+            vertical-align: bottom;
+            display: inline-block;
+            width: 16px;
+            visibility: hidden;
+        }
+
+        .FoodName {
+            float: left;
+            width: 136px;
+            margin-right: 10px;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .Num {
+            width: 50px;
+            float: left;
+            text-align: center;
+            color: #666;
+        }
+
+        .Price {
+            float: left;
+            margin-left: 10px;
+            color: #ff6900;
+            text-align: right;
+            width: 45px;
+            font-size: 14px;
+        }
+
+        #deleteSingle {
+            width: 16px;
+            position: relative;
+            top: -1px;
+            float: right;
+            color: #999;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        #deleteSingle:hover {
+            color: #08c;
+        }
+
+        #ball {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #3199e8;
+            width: 15px;
+            height: 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+            font: 12px/16px "Helvetica Neue", Arial, "Microsoft Yahei", sans-serif;
+        }
+
+        #FoodList ul li {
+            position: relative;
+            padding: 12px 4px;
+        }
+
+        #notification {
+            background: #efb73e;
+            width: 300px;
+            height: 35px;
+            margin: 0 auto;
+            font-size: 12px;
+            padding: 0 10px;
+            color: #ffffff;
+            line-height: 35px;
+            position: fixed;
+            top: -35px;
+            left: 42%;
+            opacity: 0;
+            transition: all 400ms;
+            -webkit-transition: all 400ms;
+        }
+
+        #notification.show {
+            top: 0;
+            opacity: 1;
+        }
+
+        .icon-info-sign {
+            margin-right: 10px;
+        }
+
+        @-webkit-keyframes glowing-primary {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+                box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(27, 154, 247, 0.8);
+                box-shadow: 0 0 20px rgba(27, 154, 247, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+                box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+            }
+        }
+
+        @keyframes glowing-primary {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+                box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(27, 154, 247, 0.8);
+                box-shadow: 0 0 20px rgba(27, 154, 247, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+                box-shadow: 0 0 0 rgba(27, 154, 247, 0.3);
+            }
+        }
+
+        @-webkit-keyframes glowing-highlight {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+                box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+                box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+                box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            }
+        }
+
+        @keyframes glowing-highlight {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+                box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+                box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+                box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            }
+        }
+
+        @-webkit-keyframes glowing-caution {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+                box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
+                box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+                box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+            }
+        }
+
+        @keyframes glowing-caution {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+                box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
+                box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+                box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
+            }
+        }
+
+        @-webkit-keyframes glowing-action {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+                box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(165, 222, 55, 0.8);
+                box-shadow: 0 0 20px rgba(165, 222, 55, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+                box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+            }
+        }
+
+        @keyframes glowing-action {
+            from {
+                -webkit-box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+                box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+            }
+            50% {
+                -webkit-box-shadow: 0 0 20px rgba(165, 222, 55, 0.8);
+                box-shadow: 0 0 20px rgba(165, 222, 55, 0.8);
+            }
+            to {
+                -webkit-box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+                box-shadow: 0 0 0 rgba(165, 222, 55, 0.3);
+            }
+        }
+
+        .Title a {
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .greenSign {
+            color: rgb(165, 222, 55);
+        }
+
+        .blueSign {
+            color: rgb(69, 173, 249);
+        }
+
+        .orangeSign {
+            color: rgb(254, 186, 61);
+        }
+
+        .redSign {
+            color: rgb(255, 67, 81);
+        }
+
+    </style>
+</head>
+<body>
+<table style="margin-left: 147px; background: white; border-left: 1px solid #DCDCDC;
+                            border-right: 1px solid #DCDCDC;" class="table table-hover">
+    <thead>
+    <tr class="text-capitalize" style="background-color: rgb(249, 249, 249);">
+        <td style="width: 43px;">
+        </td>
+        <td>
+            名称
+        </td>
+        <td style="width: 128px;">
+        </td>
+        <td>
+            &nbsp; &nbsp;&nbsp;价格
+        </td>
+        <td>
+            添加到购物车
+        </td>
+    </tr>
+    </thead>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>黄焖鸡</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>黄焖鸭</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>黄焖茄子</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>hahah</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>35</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>dasdasd</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>123123</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>黄1322鸡</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>321312</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>312</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>黄321312</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>12313</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+    <tr style="height: 64px;">
+        <td style="padding-top: 13px;">
+
+        </td>
+        <td style="padding-top: 20px; width: 160px;" class="alert-link">
+            <span>123312</span>
+        </td>
+        <td style="padding-top: 19px; color: Gray;">
+
+        </td>
+        <td style="width: 282px; padding-top: 19px;">
+            <span>25</span>
+        </td>
+        <td>
+            <button class="btn btn-default AddToCart">
+                买一份
+            </button>
+        </td>
+    </tr>
+</table>
+<div class="ShoppingCart">
+    <div id="TicketOfBottom">
+        <i class="icon-shopping-cart icon-3x" id="sign"></i><span id="Counts"></span><span id="SumPrices">
+            </span>
+    </div>
+    <button type="button" class="btn btn-default CheckOut">去下单</button>
+
+    <div id="CartContent" style="top: 0px;">
+        <div class="clearfix" id="contentTitle">
+            <div class="Title" style="float: left">
+                购物篮 <a id="clearCart">[清空]</a>
+            </div>
+        </div>
+        <div id="FoodList">
+            <ul id="ul">
+            </ul>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div id="notification">
+    <span id="msg"><i class="icon-info-sign icon-large"></i><span></span></span>
+</div>
+<script src="jquery-1.11.2.min.js"></script>
+<script src="jquery.fly.min.js" type="text/javascript"></script>
+<script src="jQuery.Hz2Py-min.js" type="text/javascript"></script>
+<script src="requestAnimationFrame.js" type="text/javascript"></script>
+<script>
+
+    //购物车内容滑动模块
+    function cartAnimate(open) {
+        open ? show() : $("#CartContent").animate({top: "0px"});
+    }
+    ;
+    //底部条的点击事件只注册一个，高度由其他函数决定
+    $(document).on('click', '#TicketOfBottom', function () {
+        cartAnimate($(this).toggleClass('open').hasClass('open'));
+    });
+    function show() {
+        var ticket = $("#TicketOfBottom"),
+                content = $("#CartContent"),
+                length = localStorage.length,
+                height;
+        switch (length) {
+            case 1:
+                height = -(length * 65);
+                break;
+            case 0:
+                height = 0;
+                break;
+            default :
+                height = -(65 + (length - 1) * 24);
+        }
+
+        ticket.addClass('open');
+        if (height === 0) {
+            content.css({top: height + "px"});
+        }
+        content.animate({top: height + "px"}, 300);
+    }
+
+    //添加购物车模块
+    $(document).on('click', '.AddToCart', function () {
+        var $this = $(this);
+        //点击button出现动画效果
+        //创建篮球
+        var rootElement = document.body;
+        var ball = document.createElement("span");
+        ball.id = "ball";
+        ball.innerText = "1";
+        rootElement.appendChild(ball);
+        //获得点击button的left,top
+        var buttonPosition = $this.offset();
+        var btnPositionx = buttonPosition.left - window.scrollX;
+        var btnPositiony = buttonPosition.top - window.scrollY;
+        //获得购物车的left,top
+        var cart = $('.ShoppingCart').offset();
+        var cartX = cart.left - window.scrollX;
+        var cartY = cart.top - window.scrollY;
+        var ball = $('#ball');
+        ball.fly({
+            start: {
+                left: btnPositionx,
+                top: btnPositiony
+            },
+            end: {
+                left: cartX,
+                top: cartY,
+            },
+            onEnd: function () {
+                ball.remove();
+                calculate();
+            }
+        });
+        //首先判断购物车数量，允许之后再添加
+        if (!judge()) {
+            $('#msg').find('span').text("您的购物车已经太满了呢，请减少点再添加吧~");
+            $('#notification').addClass('show');
+            setTimeout(function () {
+                $('#notification').removeClass('show')
+            }, 5000);
+            return;
+        }
+        //读取需要添加购物车的值
+        var temStation = $this.closest('tr').find('td').next();
+        var name = temStation.find('span').html();
+        var price = temStation.next().next().find('span').html();
+        var num = 1,
+                oldnum,
+                temArray;
+
+        //这里采用第一种存储模式----localStorage
+
+        //重复则num+1,并不增加到localStorage中,只是修改数组的num
+        if (localStorage[name]) {
+
+            oldnum = JSON.parse(localStorage.getItem(name))[1];
+            oldnum++;
+            temArray = [price, oldnum];
+            localStorage.setItem(name, JSON.stringify(temArray));
+            var pyname = makePy(name);
+            $("#" + pyname + "").val(oldnum);
+
+            show();
+
+        }
+        //否则向localStorage中添加，同时也向购物车中添加
+        else {
+            //将price和num作为数组也作为值存储在名为name的对象中
+            temArray = [price, num];
+            //存储之前用JSON编码
+            localStorage.setItem(name, JSON.stringify(temArray));
+            //向购物车中添加新的菜品
+            singalbuildCart(name);
+            setTimeout(function () {
+                show()
+            }, 500);
+
+        }
+        if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+            calculate();
+        }
+    });
+    //购物车完整构建方法（供第一次加载使用）
+    function buildCart() {
+
+        var length = localStorage.length,
+                cartName,
+                i = 0;
+        for (; i < length; i++) {
+            cartName = localStorage.key(i);
+            singalbuildCart(cartName);
+        }
+        calculate();
+        show();
+    }
+
+    //购物车构建方法（单独分出）
+    function singalbuildCart(foodName) {
+        var ul = document.getElementById("ul");
+        var li = document.createElement("li");
+        li.setAttribute("class", "FoodList");
+        //li层构建完毕，开始构建第一个div
+        var firdiv = document.createElement("div");
+        firdiv.setAttribute("class", "FoodName");
+        firdiv.innerHTML = foodName;
+        //第一个div构建完毕，开始构建第二个div
+        var secdiv = document.createElement("div");
+        secdiv.setAttribute("class", "Num");
+        var fira = document.createElement("a");
+        fira.setAttribute("class", "operation");
+        fira.setAttribute("id", "add");
+        fira.setAttribute("style", "text-decoration:none;");
+        fira.innerHTML = "+";
+        secdiv.appendChild(fira);
+        var input = document.createElement("input");
+        input.setAttribute("class", "SetNum");
+        //将ID的汉字转化为拼音
+        input.setAttribute("id", makePy(foodName));
+        input.type = "text";
+        input.value = JSON.parse(localStorage.getItem(foodName))[1];
+        secdiv.appendChild(input);
+        var lasta = document.createElement("a");
+        lasta.setAttribute("class", "operation");
+        lasta.setAttribute("id", "reduce");
+        lasta.setAttribute("style", "text-decoration:none;");
+        lasta.innerHTML = "-";
+        secdiv.appendChild(lasta);
+        //第二个div构建完毕,开始构建第三个div
+        var thidiv = document.createElement("div");
+        thidiv.setAttribute("class", "Price");
+        thidiv.innerHTML = "￥" + JSON.parse(localStorage.getItem(foodName))[0];
+        //第三个div构建完毕,开始构建第四个a
+        var a = document.createElement("a");
+        a.innerHTML = "×";
+        a.setAttribute("id", "deleteSingle");
+        a.setAttribute("style", "text-decoration: none; visibility:hidden; ");
+        li.appendChild(firdiv);
+        li.appendChild(secdiv);
+        li.appendChild(thidiv);
+        li.appendChild(a);
+        ul.appendChild(li);
+    }
+
+    //清空购物车
+    $(document).on('click', '#clearCart', function () {
+        localStorage.clear();
+        var $this = $(this);
+        var b = $this.parent().parent().next().find('li'),
+                content = $("#CartContent");
+        b.remove();
+        show();
+        calculate();
+    });
+    //删除购物车中一项
+    $(document).on('click', '#deleteSingle', function () {
+        $this = $(this);
+        var li = $this.closest('li');
+        var name = li.children().html();
+        localStorage.removeItem(name);
+        li.remove();
+        show();
+        calculate();
+    });
+    //增减箭头控制数目
+    $(document).on('click', '#add', function () {
+        $this = $(this);
+        //首先判断购物车数量，允许之后再添加
+        if (!judge()) {
+            $('#msg').find('span').text("您的购物车已经太满了呢，请减少点再添加吧~");
+            $('#notification').addClass('show');
+            setTimeout(function () {
+                $('#notification').removeClass('show')
+            }, 5000);
+            return;
+        }
+        //修改localStorage
+        var input = $this.next().val();
+        var name = $this.closest("li").children().html();
+        var price = JSON.parse(localStorage.getItem(name))[0];
+        var temArray;
+        input++;
+        temArray = [price, input];
+        localStorage.setItem(name, JSON.stringify(temArray));
+        $this.next().val(input);
+
+        calculate();
+    });
+    $(document).on('click', '#reduce', function () {
+        $this = $(this);
+        //修改localStorage
+        var input = $this.prev().val();
+        var name = $this.closest("li").children().html();
+        var price = JSON.parse(localStorage.getItem(name))[0];
+        var temArray;
+        input--;
+        if (input === 0) {
+            $this.closest('li').remove();
+            localStorage.removeItem(name);
+            show();
+            calculate();
+            return;
+        }
+        temArray = [price, input];
+        localStorage.setItem(name, JSON.stringify(temArray));
+        $this.prev().val(input);
+        calculate();
+    });
+    //控制数量输入
+    $(document).on('blur', '.SetNum', function () {
+        $this = $(this);
+        var li = $this.closest('li'),
+                name = li.children().html();
+        //判断输入是否为零
+        if ($this.val() === "0") {
+            localStorage.removeItem(name);
+            li.remove();
+
+            show();
+            calculate();
+        }
+        //判断购物车数量，允许之后再添加
+        if ($this.val() >= 8) {
+            $('#msg').find('span').text("您的购物车已经太满了呢，请减少点再添加吧~");
+            $('#notification').addClass('show');
+            setTimeout(function () {
+                $('#notification').removeClass('show')
+            }, 5000);
+            $this.val(1);
+            calculate();
+        }
+        else {
+            var price = JSON.parse(localStorage.getItem(name))[0];
+            var temArray, input = $this.val();
+            temArray = [price, input];
+            localStorage.setItem(name, JSON.stringify(temArray));
+            calculate();
+        }
+    });
+    $(document).on('mouseover', '.FoodList', function () {
+        $this = $(this);
+        var a = $this.find('a');
+        if (a.css("visibility", "hidden")) {
+            a.css("visibility", "visible");
+        }
+    })
+    $(document).on('mouseout', '.FoodList', function () {
+        $this = $(this);
+        var a = $this.find('a');
+        if (a.css("visibility", "visible")) {
+            a.css("visibility", "hidden");
+        }
+
+    })
+    //计算购物车总价
+    function calculate() {
+        var sumPrice = 0, sumNum = 0, i = 0, content = $("#CartContent"), bottom = $("#TicketOfBottom"), sign = $("#sign");
+        for (; i < localStorage.length; i++) {
+            var name = localStorage.key(i);
+            var num = JSON.parse(localStorage.getItem(name))[1];
+            sumNum += +num;
+            var price = JSON.parse(localStorage.getItem(name))[0];
+            sumPrice += +num * +price;
+        }
+        if (sumNum === 0) {
+
+            sign.removeClass("blueSign").removeClass("redSign").removeClass("orangeSign").addClass("greenSign");
+            bottom.removeClass("blueBorder").removeClass("redBorder").removeClass("orangeBorder").addClass("greenBorder");
+            content.removeClass("OrangeBreatheLight").removeClass("RedBreatheLight").removeClass("BlueBreatheLight").addClass("GreenBreatheLight");
+        }
+        if (sumNum > 0 && sumNum < 6) {
+            sign.removeClass("greenSign").removeClass("redSign").removeClass("orangeSign").addClass("blueSign");
+            bottom.removeClass("redBorder").removeClass("orangeBorder").removeClass("greenBorder").addClass("blueBorder");
+            content.removeClass("OrangeBreatheLight").removeClass("RedBreatheLight").removeClass("GreenBreatheLight").addClass("BlueBreatheLight");
+        }
+        else if (sumNum > 6 && sumNum < 10) {
+            sign.removeClass("greenSign").removeClass("redSign").removeClass("blueSign").addClass("orangeSign ");
+            bottom.removeClass("blueBorder").removeClass("redBorder").removeClass("greenBorder").addClass("orangeBorder");
+            content.removeClass("BlueBreatheLight").removeClass("RedBreatheLight").removeClass("GreenBreatheLight").addClass("OrangeBreatheLight");
+        }
+        else if (sumNum >= 10) {
+            sign.removeClass("greenSign").removeClass("orangeSign").removeClass("blueSign").addClass("redSign  ");
+            bottom.removeClass("blueBorder").removeClass("orangeBorder").removeClass("greenBorder").addClass("redBorder");
+            content.removeClass("BlueBreatheLight").removeClass("OrangeBreatheLight").removeClass("GreenBreatheLight").addClass("RedBreatheLight");
+        }
+        if (sumPrice == 0 || sumNum == 0) {
+            $('#Counts').text(" ");
+            $('#SumPrices').text(" ");
+            return;
+        }
+        $('#Counts').text(sumNum + "份");
+        $('#SumPrices').text("￥" + sumPrice);
+    }
+    //判断能否添加菜
+    function judge() {
+        var i = 0, foodNum = 0;
+        for (; i < localStorage.length; i++) {
+            var name = localStorage.key(i);
+            foodNum += +JSON.parse(localStorage.getItem(name))[1];
+        }
+        if (foodNum > 9) {
+            return false;
+        }
+        return true;
+    }
+
+    $(window).load(function () {
+        buildCart();
+    });
+//    var a = function () {
+//        alert("1234");
+//        if ($.browser.msie && ($.browser.version == "6.0") && !$.support.style) {
+//            alert("我是ie6!");
+//        }
+//    }
+
+</script>
+</body>
+</html>
